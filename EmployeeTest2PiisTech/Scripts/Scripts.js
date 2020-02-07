@@ -64,3 +64,25 @@ function Edit(url) {
 
 	});
 }
+function Delete(url) {
+	if (confirm('Are you sure to delete this record ?') == true)
+	{
+		$.ajax({
+			type: 'POST',
+			url: url,
+			success: function (response) {
+				if (response.success) {
+					$("#firstTab").html(response.html);
+					$.notify(response.message, "warn");
+					if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable))
+						activatejQueryTable();
+				}
+				else {
+					$.notify(response.message, "error");
+				}
+			}
+
+		});
+
+	}
+}

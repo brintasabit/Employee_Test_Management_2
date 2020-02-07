@@ -61,7 +61,7 @@
                 <div class="col-md-10">
                     @*@Html.EditorFor(model => model.ImagePath, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.ImagePath, "", new { @class = "text-danger" })*@
-                    <img src="@Url.Content(Model.ImagePath)" style="margin: 10px" height="200" width="200" id="imagePreview" />
+                    <img src="@Url.Content(Model.ImagePath)" style="margin: 50px" height="200" width="200" id="imagePreview" />
                     <input type="file" name="ImageUpload" accept="image/jpeg, image/png" onchange="ShowImagePreview(this,document.getElementById('imagePreview'))" />
                 </div>
             </div>

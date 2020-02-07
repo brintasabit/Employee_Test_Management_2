@@ -86,5 +86,18 @@ namespace EmployeeTest2PiisTech.Controllers
             }
         }
 
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
     }
 }
