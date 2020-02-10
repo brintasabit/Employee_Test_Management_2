@@ -90,11 +90,19 @@ namespace EmployeeTest2PiisTech.Controllers
         {
             try
             {
+                using (DBModel dB=new DBModel())
+                {
+                    Employee emp = dB.Employees.Where(x => x.EmployeeId == id).FirstOrDefault<Employee>();
+                    dB.Employees.Remove(emp);
+                    dB.SaveChanges();
+                }
+                return Json(new {success=true,html=GlobalClass.RenderRazorViewToString(this,"ViewAll",GetAllEmployee()),Message="Deleted Successfully!"},JsonRequestBehavior.AllowGet);
 
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                return Json(new {success=false,Message=e.Message},JsonRequestBehavior.AllowGet);
+
                 throw;
             }
         }

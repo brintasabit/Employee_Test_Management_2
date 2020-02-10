@@ -1,4 +1,15 @@
-﻿function ShowImagePreview(imageUploader,previewImage) {
+﻿$(function () {
+	$("#loaderbody").addClass('hide');
+
+
+	$(document).bind('ajaxStart', function () {
+		$("#loaderbody").removeClass('hide');
+	}).bind('ajaxStop', function () {
+		$("#loaderbody").addClass('hide');
+	});
+});
+
+function ShowImagePreview(imageUploader,previewImage) {
 	if (imageUploader.files && imageUploader.files[0]) {
 		var reader = new FileReader();
 		reader.onload = function (e) {
@@ -13,15 +24,15 @@ function jQueryAjaxPost(form) {
 	$.validator.unobtrusive.parse(form);
 	if ($(form).valid()) {
 		var ajaxConfig = {
-			type: "POST",
+			type: 'POST',
 			url: form.action,
 			data: new FormData(form),
 			success: function (response) {
 				if (response.success) {
 					$("#firstTab").html(response.html);
-					refreshAddNewTab($(form).attr("data-restUrl"), true);
+					refreshAddNewTab($(form).attr('data-restUrl'), true);
 					$.notify(response.message, "success");
-					if (typeof activatejQueryTable !== "undefined" && $.isFunction(activatejQueryTable))
+					if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable))
 						activatejQueryTable();
 				}
 				else {
@@ -29,7 +40,7 @@ function jQueryAjaxPost(form) {
 				}
 			}
 		}
-		if ($(form).attr("enctype") == "multipart/form-data") {
+		if ($(form).attr('enctype') == "multipart/form-data") {
 			ajaxConfig["contentType"] = false;
 			ajaxConfig["processData"] = false;
 		}
