@@ -1,6 +1,8 @@
 ﻿$(function () {
 	$("#loaderbody").addClass('hide');
-
+	$('#saveProfile').click(function() {
+		AddOrEditEmployee();
+	});
 
 	$(document).bind('ajaxStart', function () {
 		$("#loaderbody").removeClass('hide');
@@ -19,36 +21,60 @@ function ShowImagePreview(imageUploader,previewImage) {
         
 	}
 }
-
-function jQueryAjaxPost(form) {
-	$.validator.unobtrusive.parse(form);
-	if ($(form).valid()) {
-		var ajaxConfig = {
-			type: 'POST',
-			url: form.action,
-			data: new FormData(form),
-			success: function (response) {
-				if (response.success) {
-					$("#firstTab").html(response.html);
-					refreshAddNewTab($(form).attr('data-restUrl'), true);
-					$.notify(response.message, "success");
-					if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable))
-						activatejQueryTable();
-				}
-				else {
-					$.notify(response.message, "error");
-				}
-			}
-		}
-		if ($(form).attr('enctype') == "multipart/form-data") {
-			ajaxConfig["contentType"] = false;
-			ajaxConfig["processData"] = false;
-		}
-		$.ajax(ajaxConfig);
-
-	}
-	return false;
+var AddOrEditEmployee = function() {
+	var requestData = {
+		EmployeeId: $('#EmployeeId').val(),
+		Name: $('#Name').val(),
+		Position: $('#Position').val(),
+		Office: $('#Office').val(),
+		Salary: $('#Salary').val(),
+		ImagePath: $('#ImagePath').val()
+	};
+	$.ajax({
+		url: '/Employee/AddOrEdit',
+		type: 'POST',
+		data: JSON.stringify(requestData),
+		dataType: 'json',
+		contentType: 'application/json; charset=utf-8',
+		error: function (xhr) {
+			alert('Error: ' + xhr.statusText);
+		},
+		success: function (result) {
+			alert('Success');
+		},
+		async: true,
+		processData: false
+	});
 }
+//function jQueryAjaxPost(form) {
+//	$.validator.unobtrusive.parse(form);
+//	if ($(form).valid()) {
+//		var ajaxConfig = {
+//			type: 'POST',
+//			url: form.action,
+//			data: new FormData(form),
+//			success: function (response) {
+//				if (response.success) {
+//					$("#firstTab").html(response.html);
+//					refreshAddNewTab($(form).attr('data-resetUrl'), true);
+//					$.notify(response.message, "success");
+//					if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable))
+//						activatejQueryTable();
+//				}
+//				else {
+//					$.notify(response.message, "error");
+//				}
+//			}
+//		}
+//		if ($(form).attr('enctype') == "multipart/form-data") {
+//			ajaxConfig["contentType"] = false;
+//			ajaxConfig["processData"] = false;
+//		}
+//		$.ajax(ajaxConfig);
+
+//	}
+//	return false;
+//}
 
 function refreshAddNewTab(resetUrl, showViewTab) {
 	$.ajax({

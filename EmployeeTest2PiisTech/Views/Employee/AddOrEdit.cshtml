@@ -7,8 +7,6 @@
 
 @*<h2>AddOrEdit</h2>*@
 
-@using (Html.BeginForm("AddOrEdit","Employee",FormMethod.Post,new {enctype="multipart/form-data",onsubmit="return jQueryAjaxPost(this);",data_resetUrl=Url.Action("AddOrEdit","Employee",new {id=0})}))
-{
     @Html.AntiForgeryToken()
     <div class="row"></div>
     <div class="form-horizontal">
@@ -51,10 +49,10 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Submit" class="btn btn-default" />
+                    <input id="saveProfile" type="submit" value="Submit" class="btn btn-default" />
                     @if (Model.EmployeeId != 0)
                     {
-                        <a class="btn btn-success" onclick="refreshAddNewTab('@Url.Action("AddOrEdit","Employee",new {id=0})',false)"><i class="fa-fade"></i>Add New</a>
+                        <a class="btn btn-success" id="saveProfile" onclick="refreshAddNewTab('@Url.Action("AddOrEdit","Employee",new {id=0})',false)"><i class="fa-fade"></i>Add New</a>
                     }
                 </div>
             </div>
@@ -73,6 +71,6 @@
 
     </div>
     
-}
+
 
 
